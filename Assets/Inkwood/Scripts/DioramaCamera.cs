@@ -55,7 +55,7 @@ namespace Inkwood
             if (!showHelp) return;
             var style = new GUIStyle(GUI.skin.label) { alignment = TextAnchor.MiddleCenter, fontSize = 13 };
             style.normal.textColor = new Color(0.23f, 0.18f, 0.13f, 0.8f);
-            GUI.Label(new Rect(0, Screen.height - 34, Screen.width, 26), "DRAG RIGHT MOUSE / A D  ·  ROTATE       SCROLL  ·  ZOOM       R  ·  RESET       H  ·  HIDE HELP", style);
+            GUI.Label(new Rect(0, Screen.height - 34, Screen.width, 26), "RIGHT DRAG / A D · ROTATE     SCROLL · ZOOM     R · RESET     S · CAST SHADOWS     H · HIDE HELP", style);
         }
     }
 }

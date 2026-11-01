@@ -11,6 +11,7 @@ Open `Scenes/InkwoodGlade.unity` and press Play. Use a 16:9 Game view for the st
 | Mouse wheel | Zoom |
 | R | Restore the starting angle and zoom |
 | H | Hide or show the control hint |
+| S | Toggle real cast shadows |
 
 The camera remains orthographic. Elevation, focus point, rotation speed, home framing, and zoom limits are editable on Main Camera's Diorama Camera component.
 
@@ -18,7 +19,9 @@ The camera remains orthographic. Elevation, focus point, rotation speed, home fr
 
 Five adventurers (wizard, bucket knight, ranger, pilgrim, monk), three goblin variants, scalloped trees, pines, standing stones, broken towers and walls, a fountain, sarcophagi, and a woodland camp are built from editable 3D mesh assets. Small props include skulls, mushrooms, weapons, treasure, barrels, cut logs, leaves, and brambles. Twenty reusable character and environment prefabs are in `Prefabs/`.
 
-Colors are shared materials in `Materials/`. The Flat Color shader uses a small, fixed three-band shading difference to suggest volume without realistic highlights or cast shadows. Grounding shadows are deliberately simple pale ovals. PaletteProfile disables tone mapping, bloom, and vignetting to preserve the selected colors.
+Colors are shared materials in `Materials/`. Toon Color uses the actual directional Sun and distinct artist-selected lit and shadow colors. The band boundary and narrow transition are adjustable per material. Grounding shadows are simple pale ovals when cast shadows are off. PaletteProfile disables tone mapping, bloom, and vignetting to preserve the selected colors.
+
+Select **08 · Toon lighting** to compare **No cast shadows** and **Cast shadows** in the Inspector, or press **S** in Play Mode. Both modes retain directional toon bands. Rotate its child Sun to move the lit/shadow boundary. The outlines and interior ink strokes stay unlit and do not cast shadows; only the actual model surfaces cast. Grounding ovals hide automatically when real shadows are enabled.
 
 ### Outer lines
 

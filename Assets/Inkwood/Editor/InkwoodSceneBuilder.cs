@@ -152,6 +152,7 @@ namespace Inkwood.Editor
 
             ExportEnvironmentPrefabs(scene);
             UnityEngine.Object.DestroyImmediate(library.gameObject);
+            SetupLighting(scene);
             EditorSceneManager.SaveScene(scene,ScenePath);
             AssetDatabase.SaveAssets();
             var sceneView=SceneView.lastActiveSceneView;
@@ -186,9 +187,15 @@ namespace Inkwood.Editor
             {
                 string path=Root+"/Materials/"+pair.Key+".mat";
                 var m=AssetDatabase.LoadAssetAtPath<Material>(path);
-                if(!m) { m=new Material(Shader.Find("Inkwood/Flat Color")); AssetDatabase.CreateAsset(m,path); }
+                if(!m) { m=new Material(Shader.Find("Inkwood/Toon Color")); AssetDatabase.CreateAsset(m,path); }
                 ColorUtility.TryParseHtmlString("#"+pair.Value,out Color c);
-                m.SetColor("_BaseColor",c); m.SetFloat("_ShadeStrength",pair.Key=="Meadow" || pair.Key=="Ink" || pair.Key=="Shadow"?0:.105f);
+                m.shader=Shader.Find("Inkwood/Toon Color");
+                m.SetColor("_BaseColor",c);
+                m.SetColor("_ShadowColor",ShadowColor(pair.Key,c));
+                bool unlit=pair.Key=="Meadow"||pair.Key=="Ink"||pair.Key=="Shadow"||pair.Key=="WaterLight";
+                m.SetFloat("_LightingEnabled",unlit?0:1);
+                m.SetFloat("_ReceiveShadows",pair.Key=="Ink"||pair.Key=="Shadow"||pair.Key=="WaterLight"?0:1);
+                m.SetFloat("_BandThreshold",.22f); m.SetFloat("_BandSoftness",.012f);
                 EditorUtility.SetDirty(m); palette[pair.Key]=m;
             }
             string inkPath=Root+"/Materials/Outline.mat";
@@ -196,6 +203,43 @@ namespace Inkwood.Editor
             if(!ink) { ink=new Material(Shader.Find("Inkwood/Ink Outline")); AssetDatabase.CreateAsset(ink,inkPath); }
             ink.SetColor("_BaseColor",palette["Ink"].GetColor("_BaseColor")); ink.SetFloat("_OutlinePixels",3.2f);
             EditorUtility.SetDirty(ink);
+        }
+        static Color ShadowColor(string name,Color fallback)
+        {
+            var colors=new Dictionary<string,string>
+            {
+                {"Meadow","B5C477"},{"Stone","6D8998"},{"StoneTop","7898A5"},{"StoneDark","556D7D"},
+                {"Moss","7D965E"},{"Leaf","78965F"},{"LeafLight","819F67"},{"LeafDark","5C7D50"},
+                {"Pine","548574"},{"Orange","D48154"},{"Wood","76523F"},{"WoodLight","95694D"},
+                {"WoodDark","573D32"},{"Robe","64959F"},{"Cream","CFC6A0"},{"Beard","BDCCB2"},
+                {"Skin","BFAA86"},{"Goblin","71914F"},{"GoblinDark","56763D"},{"Leather","94644F"},
+                {"Rose","A96368"},{"Red","AA4F4C"},{"Gold","C49E4C"},{"Water","87B5C3"}
+            };
+            if(colors.TryGetValue(name,out string hex)) { ColorUtility.TryParseHtmlString("#"+hex,out var color);return color; }
+            return fallback;
+        }
+        public static void UpgradeLighting()
+        {
+            if(EditorApplication.isPlaying) throw new InvalidOperationException("Stop Play Mode first.");
+            MakePalette(); ConfigureRendering();
+            SetupLighting(SceneManager.GetActiveScene());
+            EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene());
+            AssetDatabase.SaveAssets();
+        }
+        static void SetupLighting(Scene scene)
+        {
+            var roots=scene.GetRootGameObjects();
+            var control=roots.SelectMany(g=>g.GetComponentsInChildren<DioramaLighting>(true)).FirstOrDefault();
+            if(!control) control=new GameObject("08 · Toon lighting",typeof(DioramaLighting)).GetComponent<DioramaLighting>();
+            var sun=roots.SelectMany(g=>g.GetComponentsInChildren<Light>(true)).FirstOrDefault(l=>l.type==LightType.Directional);
+            if(!sun) sun=new GameObject("Sun",typeof(Light)).GetComponent<Light>();
+            sun.name="Sun · rotate to change toon bands";
+            sun.type=LightType.Directional;sun.intensity=1;sun.color=Color.white;
+            sun.transform.SetParent(control.transform,true);
+            sun.transform.rotation=Quaternion.Euler(50,-40,0);
+            control.sun=sun;control.RefreshSurfaces();control.SetCastShadows(false);
+            RenderSettings.sun=sun;
+            EditorUtility.SetDirty(control);
         }
         static void Store(string key,Mesh mesh)
         {
@@ -237,6 +281,11 @@ namespace Inkwood.Editor
             pipeline.gpuResidentDrawerMode=GPUResidentDrawerMode.Disabled;
             pipeline.msaaSampleCount=4; pipeline.supportsHDR=false;
             pipeline.supportsCameraDepthTexture=false; pipeline.supportsCameraOpaqueTexture=false;
+            var pipelineSettings=new SerializedObject(pipeline);
+            pipelineSettings.FindProperty("m_MainLightShadowsSupported").boolValue=true;
+            pipelineSettings.ApplyModifiedPropertiesWithoutUndo();
+            pipeline.mainLightShadowmapResolution=4096;
+            pipeline.shadowDistance=100;pipeline.shadowCascadeCount=4;
             QualitySettings.renderPipeline=pipeline;
             EditorUtility.SetDirty(pipeline);
         }
