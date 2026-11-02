@@ -1,6 +1,6 @@
 # Inkwood Glade
 
-Open `Scenes/InkwoodGlade.unity` and press Play. Use a 16:9 Game view for the starting composition. The reference-inspired clearing is surrounded by fully modeled scenery, so the camera can rotate around it.
+Open `Scenes/InkwoodGlade.unity` and press Play. A 2.4:1 wide Game view matches the reference composition; narrower views automatically preserve its horizontal framing. The clearing is surrounded by fully modeled scenery, so the camera can rotate around it.
 
 ## Camera controls
 
@@ -17,7 +17,11 @@ The camera remains orthographic. Elevation, focus point, rotation speed, home fr
 
 ## Artwork
 
-Five adventurers (wizard, bucket knight, ranger, pilgrim, monk), three goblin variants, scalloped trees, pines, standing stones, broken towers and walls, a fountain, sarcophagi, and a woodland camp are built from editable 3D mesh assets. Small props include skulls, mushrooms, weapons, treasure, barrels, cut logs, leaves, and brambles. Twenty reusable character and environment prefabs are in `Prefabs/`.
+Six adventurers (wizard, bucket knight, ranger, pilgrim, monk, skeleton guard) and four goblin variants use simple, posed 3D forms with modeled equipment: spellbooks, satchels, feathers, quivers, bowed shields, shaped axes, flower bucklers, and a skull standard. The goblins have smaller pointed heads, swept ears, and bent stick limbs.
+
+Trees include tall scalloped crowns, broad oaks, round teal trees, orange cloud trees, rounded layered cedars, sweeping pines, and tapered bare trees. Prefabs retain their authored shape proportions. There are 31 reusable character and environment prefabs in `Prefabs/`.
+
+The layout uses ground anchors measured from the supplied illustration. Major landmarks follow the reference: adventurers and forest on the left, central standing stones and overgrown ruin, camp behind the fountain, and goblins on the right. Additional details include ivy, skull stakes, supply crates, candles, field mice, bones, scattered mushrooms, weapons, treasure, barrels, cut logs, foliage, and brambles.
 
 Colors are shared materials in `Materials/`. Toon Color uses the actual directional Sun and distinct artist-selected lit and shadow colors. The band boundary and narrow transition are adjustable per material. Grounding shadows are simple pale ovals when cast shadows are off. PaletteProfile disables tone mapping, bloom, and vignetting to preserve the selected colors.
 

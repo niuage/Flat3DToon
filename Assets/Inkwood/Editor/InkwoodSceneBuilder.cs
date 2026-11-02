@@ -12,7 +12,7 @@ using UnityEngine.SceneManagement;
 namespace Inkwood.Editor
 {
     /// <summary>Deterministic, editable geometry; no runtime generation or external art dependencies.</summary>
-    public static class InkwoodSceneBuilder
+    public static partial class InkwoodSceneBuilder
     {
         const string Root = "Assets/Inkwood";
         const string ScenePath = Root + "/Scenes/InkwoodGlade.unity";
@@ -46,75 +46,7 @@ namespace Inkwood.Editor
             var ground = Group("01 · Meadow", null);
             Part("Pale chartreuse meadow", ground, "box", V(0,-0.17f,0), V(200,0.3f,200), "Meadow", false);
 
-            var forest = Group("02 · Forest fringe", null);
-            // Taller, denser forest behind the clearing, with orange accents and a few bare branches.
-            Tree(forest, -14,7,1.05f,0); Tree(forest,-11.5f,8.7f,1.25f,1);
-            Tree(forest,-8.4f,8.6f,1.13f,2); Tree(forest,-5.4f,9.1f,1.25f,0);
-            Tree(forest,-2.2f,9.7f,1.16f,0); Tree(forest,1,10,1.18f,1);
-            Tree(forest,4.3f,11.5f,1.15f,0); Tree(forest,10.8f,11.4f,1.05f,0);
-            Tree(forest,7.5f,10,0.9f,2); Tree(forest,13.5f,9,1.18f,2);
-            Tree(forest,15.3f,3.6f,1.10f,0); Tree(forest,-15,0.6f,.94f,0);
-            Tree(forest,-14,-7.8f,1.03f,2); Tree(forest,-11.4f,-10.2f,.85f,0);
-            Pine(forest,-8.5f,-10.2f,1.3f); Pine(forest,-12,4.8f,.7f); Pine(forest,-13.6f,9.3f,.7f);
-            Pine(forest,-4.7f,-11.3f,1.3f); Tree(forest,15,-8.2f,1.18f,3);
-            Tree(forest,-4.1f,5.8f,.9f,0); Tree(forest,-10.7f,3.8f,.88f,0);
-
-            var ruins = Group("03 · Blue stone ruins", null);
-            Wall(ruins,-10,2.4f,4.5f,-8); Wall(ruins,-6.3f,1.9f,3.1f,-12);
-            Wall(ruins,-3.4f,1.4f,3,-8); Wall(ruins,5.4f,-3.6f,4,-15);
-            Wall(ruins,9.3f,-4.5f,4,-12); Wall(ruins,-9.5f,-6.9f,4.6f,-15);
-            Wall(ruins,-5.6f,-7.9f,3.3f,-15); Wall(ruins,2.4f,-6.8f,3.5f,12);
-            Wall(ruins,8.5f,7.3f,4.4f,-10); Wall(ruins,12.2f,6.6f,3,-14);
-            BrokenTower(ruins,1.2f,7.5f,0); BrokenTower(ruins,12.1f,-3,35);
-            Dolmen(ruins,-.9f,-.1f);
-            Sarcophagus(ruins,2.6f,-9, -12); Sarcophagus(ruins,-3.1f,6.7f,-10);
-            Fountain(ruins,7.3f,1.5f);
-
-            var adventurers = Group("04 · Adventurers", null);
-            PlacePrefab(Wizard(), adventurers, V(-9.5f,0,-3.9f), -8, 1.15f);
-            PlacePrefab(Knight(), adventurers, V(-6.7f,0,-4.9f), -15, 1.12f);
-            PlacePrefab(Ranger(), adventurers, V(-11,0,-.2f), 8, 1.1f);
-            PlacePrefab(Cleric(), adventurers, V(-8,0,-.7f), -5, 1.08f);
-            PlacePrefab(Monk(), adventurers, V(-13.3f,0,-3.7f),-15,1.05f);
-
-            var goblins = Group("05 · Goblin gathering", null);
-            var goblinSword = Goblin("Goblin swordsman",0);
-            var goblinShield = Goblin("Goblin shieldbearer",1);
-            var goblinBow = Goblin("Goblin archer",2);
-            PlacePrefab(goblinSword,goblins,V(3.2f,0,4.6f),-16,1);
-            PlacePrefab(goblinShield,goblins,V(5,0,2.4f),8,1);
-            PlacePrefab(goblinBow,goblins,V(10.9f,0,3.6f),-25,1);
-            PlacePrefab(goblinSword,goblins,V(9.7f,0,6),-8,1);
-            PlacePrefab(goblinShield,goblins,V(4.3f,0,-1.5f),-12,1);
-            PlacePrefab(goblinBow,goblins,V(10.4f,0,-2.4f),22,1);
-            PlacePrefab(goblinShield,goblins,V(7,0,-3.3f),-14,1);
-
-            var props = Group("06 · Camp & little discoveries", null);
-            Tent(props,-15.2f,5.8f);
-            Chest(props,3.5f,8.4f,-12,true); Chest(props,1.5f,6.2f,0,false);
-            Chest(props,4.7f,9.2f,-12,false);
-            Barrel(props,7,7.7f); Barrel(props,8.3f,7.4f); Barrel(props,6.1f,6.5f);
-            Campfire(props,12.4f,5.7f); Stump(props,11,5.3f); Stump(props,14,4.5f);
-            Stump(props,10.8f,7.4f);
-            Mushrooms(props,1.8f,-3.4f,8); Mushrooms(props,-4.3f,2.2f,5);
-            Mushrooms(props,12.7f,-6.4f,5);
-            Skull(props,-3.4f,-.7f,.8f); Skull(props,1.3f,3.5f,.85f);
-            Skull(props,5.6f,-10.2f,.8f); Skull(props,-1.2f,-4,.5f);
-            SwordOnGround(props,-.2f,-8.9f,65); SwordOnGround(props,-10.4f,1.8f,-12);
-            Banner(props,12.8f,.5f);
-            ThornPatch(props,12.5f,-6.1f); ThornPatch(props,10.9f,-7.5f);
-
-            var details = Group("07 · Meadow marks", null);
-            for(int i=0;i<110;i++)
-            {
-                float x=Rand(-16,16), z=Rand(-11.8f,10.5f);
-                if (Mathf.Abs(x)<2.3f && Mathf.Abs(z)<2.5f) continue;
-                if (Vector2.Distance(new Vector2(x,z),new Vector2(7.3f,1.5f))<2.7f) continue;
-                if(i%4==0) Rock(details,x,z,Rand(.17f,.38f));
-                else if(i%3==0) Sprout(details,x,z,Rand(.35f,.7f));
-                else Grass(details,x,z,Rand(.3f,.6f));
-            }
-            RocksAt(ruins,-11.8f,1.2f); RocksAt(ruins,2.3f,6.1f); RocksAt(ruins,13.4f,-2.8f);
+            BuildReferenceComposition();
 
             var cameraObject = new GameObject("Main Camera", typeof(Camera), typeof(DioramaCamera));
             cameraObject.tag="MainCamera";
@@ -140,7 +72,7 @@ namespace Inkwood.Editor
             vignette.intensity.Override(0);
             volume.sharedProfile=profile; EditorUtility.SetDirty(profile);
             var orbit=cameraObject.GetComponent<DioramaCamera>();
-            orbit.target=V(0,1.2f,0); orbit.homeYaw=20; orbit.elevation=43; orbit.homeSize=9.4f;
+            orbit.target=V(0,1.2f,0); orbit.homeYaw=20; orbit.elevation=43; orbit.homeSize=8;orbit.referenceAspect=2.4f;
             orbit.ResetView();
             RenderSettings.fog=false;
             RenderSettings.ambientMode=AmbientMode.Flat;
@@ -308,6 +240,7 @@ namespace Inkwood.Editor
             Store("ear",Panel(new[]{new Vector2(-.12f,-.14f),new Vector2(.35f,.22f),new Vector2(.10f,.23f),new Vector2(-.14f,.11f)},.10f));
             for(int i=0;i<4;i++) Store("canopy"+i,Canopy(i));
             Store("torus",Torus(1,.085f));
+            MakeDetailedMeshes();
         }
         static GameObject Part(string name,Transform parent,string mesh,Vector3 pos,Vector3 scale,string material,bool outline=true)
         {
@@ -365,76 +298,29 @@ namespace Inkwood.Editor
             go.transform.localPosition=pos; go.transform.localRotation=Quaternion.Euler(0,yaw,0); go.transform.localScale=Vector3.one*scale;
         }
 
-        static void Tree(Transform parent,float x,float z,float scale,int type)
-        {
-            var t=Group(type==3?"Bare twisting oak":"Scalloped woodland tree",parent);
-            t.localPosition=V(x,0,z); t.localScale=type==3?V(scale*1.4f,scale*1.15f,scale):Vector3.one*scale;
-            Shadow(t,0,0,2,1.2f);
-            var trunk=new[]{V(0,0,0),V(-.12f,.9f,.02f),V(.04f,2,0),V(-.18f,2.9f,0),V(-.1f,3.4f,0)};
-            // Tubes are outlined with a larger dark tube, then a narrower brown tube.
-            OutlineTube(t,"Trunk contour",trunk,.24f,"Wood");
-            OutlineTube(t,"Branch contour",new[]{V(-.05f,1.3f,.01f),V(-.65f,2.2f,.04f),V(-.9f,2.9f,.08f)},.13f,"Wood");
-            OutlineTube(t,"Branch contour",new[]{V(0,1.85f,.02f),V(.6f,2.65f,.06f),V(.69f,3.35f,.02f)},.12f,"Wood");
-            if(type==3)
-            {
-                OutlineTube(t,"Reaching branch",new[]{V(-.1f,2.8f,0),V(-.6f,3.7f,.1f),V(-.7f,4.4f,.12f)},.1f,"Wood");
-                OutlineTube(t,"Reaching branch",new[]{V(.35f,2.5f,.04f),V(1.1f,3,.1f),V(1.3f,3.6f,.1f)},.09f,"Wood");
-                return;
-            }
-            string color=type==2?"Orange":type==1?"Pine":"Leaf";
-            int seed=Mathf.Abs((int)x)%4;
-            var crown=Part("Single scalloped canopy",t,"canopy"+seed,V(0,3.65f,0),V(1.55f,1.85f,1.24f),color);
-            CanopyMarks(crown.transform,seed);
-        }
         static void OutlineTube(Transform t,string name,Vector3[] points,float radius,string color)
         {
             string key="stroke"+(strokeId++).ToString("D4"); Store(key,Tube(points,radius,10));
             Part(name,t,key,Vector3.zero,Vector3.one,color);
         }
-        static void CanopyMarks(Transform crown,int seed)
-        {
-            // Short, separated foliage arcs placed on the actual curved canopy surface.
-            foreach(float side in new[]{-1f,1f})
-                for(int j=0;j<7;j++)
-                {
-                    float cx=Rand(-.62f,.58f), cy=Rand(-.63f,.64f), r=Rand(.09f,.16f);
-                    var points=new Vector3[12];
-                    for(int k=0;k<12;k++)
-                    {
-                        float a=Mathf.Lerp(20,150,k/11f)*Mathf.Deg2Rad;
-                        float px=cx+Mathf.Cos(a)*r, py=cy+Mathf.Sin(a)*r*.65f;
-                        float pz=side*Mathf.Sqrt(Mathf.Max(.05f,1-px*px-py*py));
-                        var direction=V(px,py,pz).normalized;
-                        points[k]=CanopyPoint(Mathf.Acos(direction.y),Mathf.Atan2(direction.z,direction.x),seed)*1.025f;
-                    }
-                    Curve(crown,"Foliage ink",points,.011f,"Ink");
-                }
-        }
-        static void Pine(Transform parent,float x,float z,float scale)
-        {
-            var t=Group("Simple tiered pine",parent); t.localPosition=V(x,0,z); t.localScale=Vector3.one*scale;
-            Rod("Trunk",t,V(0,0,0),V(0,1.1f,0),.17f,"Wood");
-            for(int i=0;i<3;i++)
-                Part("Pine tier",t,"cone",V(0,.55f+i*.85f,0),V(2.5f-i*.62f,1.8f,2.2f-i*.55f),"Pine");
-            for(int i=0;i<2;i++) Arc(t,V(.12f,1.25f+i*.77f,-.65f+i*.15f),.3f,205,320,.021f);
-        }
         static void Wall(Transform parent,float x,float z,float length,float yaw)
         {
             var t=Group("Broken mossy wall",parent); t.localPosition=V(x,0,z); t.localRotation=Quaternion.Euler(0,yaw,0);
             Shadow(t,0,0,length,1);
-            Box("Stone foundation",t,V(0,.23f,0),V(length,.42f,.61f),"Stone");
+            Box("Stone foundation",t,V(0,.33f,0),V(length,.64f,.61f),"Stone");
             Box("Long capstone",t,V(-.1f,.72f,0),V(length-.25f,.26f,.76f),"StoneTop");
             Box("Broken end",t,V(-length*.5f,.42f,.08f),V(.42f,.78f,.76f),"Stone");
-            for(int i=0;i<5;i++)
+            for(int side=-1;side<=1;side+=2)for(int i=0;i<5;i++)
             {
                 float bx=Mathf.Lerp(-length*.42f,length*.42f,i/4f);
-                Stroke(t,.022f,V(bx,.12f,-.323f),V(bx,.37f,-.323f),V(bx+.2f,.37f,-.323f));
+                Stroke(t,.019f,V(bx,.12f,side*.323f),V(bx,.37f,side*.323f),V(bx+.2f,.37f,side*.323f));
             }
             Stroke(t,.022f,V(-length*.4f,.56f,-.34f),V(length*.36f,.56f,-.34f));
+            Stroke(t,.020f,V(-length*.4f,.56f,.34f),V(length*.36f,.56f,.34f));
             for(int i=0;i<3;i++)
             {
                 float mx=Rand(-length*.4f,length*.4f);
-                Sphere("Moss cushion",t,V(mx,.88f,Rand(-.2f,.18f)),V(.65f,.08f,.45f),"Moss",false);
+                Part("Scalloped moss cushion",t,"canopy2",V(mx,.88f,Rand(-.2f,.18f)),V(.42f,.06f,.28f),"Moss",false);
             }
             Rock(t,length*.42f,-.7f,.27f);
         }
@@ -457,13 +343,12 @@ namespace Inkwood.Editor
         static void Dolmen(Transform parent,float x,float z)
         {
             var t=Group("Ancient standing stones",parent); t.localPosition=V(x,0,z);
-            var a=Part("Left monolith",t,"rock",V(-.92f,1.15f,0),V(.92f,2.55f,.76f),"Stone");
-            a.transform.localRotation=Quaternion.Euler(0,15,-9);
-            var b=Part("Right monolith",t,"rock",V(1,1.2f,.03f),V(1.1f,2.8f,.83f),"Stone"); b.transform.localRotation=Quaternion.Euler(0,-15,9);
-            var cap=Part("Weathered lintel",t,"rock",V(0,2.9f,0),V(3.5f,.68f,1.2f),"StoneTop"); cap.transform.localRotation=Quaternion.Euler(0,-8,-5);
+            Part("Left leaning monolith",t,"pillarLeft",V(-.95f,0,0),Vector3.one,"Stone");
+            Part("Right leaning monolith",t,"pillarRight",V(.95f,0,0),Vector3.one,"Stone");
+            var cap=Part("Asymmetric weathered lintel",t,"lintel",V(0,2.94f,0),Vector3.one,"StoneTop");cap.transform.localRotation=Quaternion.Euler(0,-8,-4);
             Stroke(t,.027f,V(-1.06f,.25f,-.41f),V(-1.12f,1.05f,-.42f),V(-.98f,2.05f,-.4f));
             Stroke(t,.024f,V(.91f,1.5f,-.45f),V(.74f,1.1f,-.46f),V(.9f,.9f,-.46f));
-            Stroke(t,.026f,V(-1.17f,3.08f,-.52f),V(-.8f,3.08f,-.6f),V(-.25f,2.94f,-.63f));
+            Stroke(t,.021f,V(-1.4f,3.12f,-.63f),V(-.99f,3.10f,-.72f),V(-.55f,3.02f,-.72f));
             Rock(t,1.56f,-.65f,.35f);
         }
         static void Sarcophagus(Transform parent,float x,float z,float yaw)
@@ -476,7 +361,7 @@ namespace Inkwood.Editor
             Stroke(t,.023f,V(.88f,.95f,-.59f),V(.88f,.56f,-.59f));
             Stroke(t,.023f,V(-.84f,1.263f,-.45f),V(-.47f,1.263f,-.45f),V(-.1f,1.263f,-.45f));
             Stroke(t,.025f,V(.2f,1.263f,.1f),V(.67f,1.263f,.1f));
-            for(int i=0;i<4;i++) Sphere("Trailing moss",t,V(Rand(-1.1f,1.1f),Rand(.2f,.85f),-.61f),V(.42f,.27f,.07f),"Moss",false);
+            for(int i=0;i<4;i++) Part("Trailing scalloped moss",t,"canopy2",V(Rand(-1.1f,1.1f),Rand(.2f,.85f),-.61f),V(.22f,.17f,.04f),"Moss",false);
             Skull(t,1.55f,-.78f,.65f); Sprout(t,-1.7f,.15f,.55f);
         }
         static void Fountain(Transform parent,float x,float z)
@@ -490,14 +375,16 @@ namespace Inkwood.Editor
             {
                 float a=i*Mathf.PI/6;
                 Stroke(t,.023f,V(Mathf.Cos(a)*1.98f,.55f,Mathf.Sin(a)*1.98f),V(Mathf.Cos(a)*2.25f,.55f,Mathf.Sin(a)*2.25f));
+                Stroke(t,.019f,V(Mathf.Cos(a)*2.254f,.07f,Mathf.Sin(a)*2.254f),V(Mathf.Cos(a)*2.254f,.31f,Mathf.Sin(a)*2.254f));
             }
+            Arc(t,V(0,.21f,0),2.254f,195,265,.018f,"Ink",true);Arc(t,V(0,.21f,0),2.254f,280,345,.018f,"Ink",true);
             Part("Pedestal foot",t,"cylinder",V(0,.61f,0),V(.7f,.21f,.7f),"StoneTop");
-            Part("Pedestal",t,"robe",V(0,.6f,0),V(.57f,.94f,.57f),"Stone");
-            Part("Upper basin",t,"bowl",V(0,1.51f,0),V(1.55f,1.3f,1.55f),"Stone");
-            Part("Upper still water",t,"cylinder",V(0,2.03f,0),V(1.58f,.025f,1.58f),"Water");
+            Part("Pedestal",t,"robe",V(0,.6f,0),V(.57f,1.49f,.57f),"Stone");
+            Part("Upper basin",t,"bowl",V(0,2.12f,0),V(1.55f,1.3f,1.55f),"Stone");
+            Part("Upper still water",t,"cylinder",V(0,2.64f,0),V(1.58f,.025f,1.58f),"Water");
             Arc(t,V(-.2f,.56f,-.1f),1.35f,180,260,.017f,"WaterLight",true);
             Arc(t,V(.05f,.56f,.15f),1.6f,5,72,.018f,"WaterLight",true);
-            Arc(t,V(0,2.06f,0),.55f,10,130,.018f,"WaterLight",true);
+            Arc(t,V(0,2.67f,0),.55f,10,130,.018f,"WaterLight",true);
         }
 
         static Transform Character(string name)
@@ -514,122 +401,7 @@ namespace Inkwood.Editor
             Sphere("Left dot eye",t,V(-spread,y,z),V(.052f,.068f,.045f),"Ink",false);
             Sphere("Right dot eye",t,V(spread,y,z),V(.052f,.068f,.045f),"Ink",false);
         }
-        static GameObject Wizard()
-        {
-            var t=Character("Wizard"); Legs(t);
-            Part("Simple blue robe",t,"robe",V(0,.3f,0),V(1,1,1),"Robe");
-            Sphere("Face",t,V(0,1.46f,-.04f),V(.53f,.57f,.46f),"Skin");
-            var hat=Part("Tall pointed hat",t,"hat",V(0,1.65f,0),V(1,1,1),"Robe"); hat.transform.localRotation=Quaternion.Euler(0,0,12);
-            Part("Long single white beard",t,"beard",V(.02f,1.17f,-.31f),V(1,1.15f,.6f),"Beard");
-            Eyes(t,1.52f,-.266f);
-            Sphere("Round nose",t,V(.02f,1.43f,-.3f),V(.14f,.16f,.16f),"Skin");
-            Rod("Left sleeve",t,V(-.18f,1.14f,0),V(-.42f,1.39f,-.03f),.115f,"Robe");
-            Sphere("Raised hand",t,V(-.46f,1.42f,-.05f),V(.16f,.19f,.16f),"Skin");
-            OutlineTube(t,"Long wooden staff",new[]{V(.8f,.2f,.1f),V(-.25f,1.81f,.16f),V(-.65f,2.4f,.18f)},.038f,"Wood");
-            Stroke(t,.018f,V(.23f,.55f,-.35f),V(.18f,.73f,-.34f));
-            return SavePrefab(t,"Wizard");
-        }
-        static GameObject Knight()
-        {
-            var t=Character("Bucket knight"); Legs(t);
-            Part("Blue tunic",t,"robe",V(0,.25f,0),V(.68f,.73f,.7f),"Robe");
-            Part("Bucket helmet",t,"cylinder",V(0,1.39f,0),V(.68f,.73f,.64f),"Leather");
-            Part("Helmet top",t,"cylinder",V(0,1.77f,0),V(.68f,.06f,.64f),"WoodLight");
-            Stroke(t,.027f,V(-.27f,1.42f,-.31f),V(-.08f,1.4f,-.34f));
-            Stroke(t,.027f,V(.06f,1.4f,-.34f),V(.27f,1.42f,-.31f));
-            Stroke(t,.022f,V(0,1.35f,-.34f),V(0,1.08f,-.34f));
-            var shield=Part("Plain kite shield",t,"shield",V(-.31f,.73f,-.33f),V(1.12f,1.06f,1),"Leather"); shield.transform.localRotation=Quaternion.Euler(0,-12,-8);
-            Rod("Axe handle",t,V(.43f,.45f,0),V(.43f,1.52f,0),.035f,"Wood");
-            Part("Small axe head",t,"shield",V(.61f,1.39f,0),V(.5f,.37f,1),"Rose").transform.localRotation=Quaternion.Euler(0,0,80);
-            return SavePrefab(t,"BucketKnight");
-        }
-        static GameObject Ranger()
-        {
-            var t=Character("Little ranger"); Legs(t);
-            Part("Blue tunic",t,"robe",V(0,.3f,0),V(.8f,.78f,.8f),"Robe");
-            Sphere("Head",t,V(0,1.4f,0),V(.56f,.57f,.50f),"Skin"); Eyes(t,1.43f,-.245f);
-            Sphere("Blue cap",t,V(-.05f,1.64f,.02f),V(.65f,.33f,.54f),"Robe");
-            Rod("Cap feather",t,V(.1f,1.65f,0),V(.32f,1.96f,0),.035f,"Cream");
-            Rod("Bow arm",t,V(-.25f,1.05f,0),V(-.5f,1.08f,-.03f),.09f,"Robe");
-            Sphere("Bow hand",t,V(-.60f,1.05f,-.1f),V(.15f,.16f,.15f),"Skin");
-            Arc(t,V(-.32f,1.02f,-.1f),.34f,110,250,.035f,"Wood");
-            Stroke(t,.015f,V(-.436f,1.34f,-.1f),V(-.436f,.70f,-.1f));
-            Rod("Quiver",t,V(.26f,.86f,.22f),V(.4f,1.49f,.22f),.11f,"Leather");
-            for(int i=0;i<3;i++) Rod("Arrow",t,V(.28f+i*.07f,1.34f,.22f),V(.4f+i*.07f,1.79f,.22f),.016f,"WoodDark",false);
-            return SavePrefab(t,"Ranger");
-        }
-        static GameObject Cleric()
-        {
-            var t=Character("White turban pilgrim"); Legs(t);
-            Part("White robe",t,"robe",V(0,.25f,0),V(.72f,.88f,.75f),"Cream");
-            Sphere("Head",t,V(0,1.4f,0),V(.48f,.5f,.44f),"Skin");
-            Sphere("Turban",t,V(0,1.68f,0),V(.72f,.55f,.6f),"Beard");
-            Arc(t,V(0,1.7f,-.28f),.29f,25,155,.024f);
-            Stroke(t,.021f,V(-.3f,1.7f,-.22f),V(.2f,1.52f,-.29f));
-            Sphere("Ruby",t,V(-.1f,1.69f,-.32f),V(.105f,.12f,.06f),"Rose");
-            Eyes(t,1.42f,-.22f,.09f);
-            Part("Small beard",t,"beard",V(0,1.2f,-.24f),V(.68f,.6f,.5f),"WoodDark");
-            Rod("Walking stick",t,V(.4f,.15f,0),V(.4f,1.32f,0),.03f,"Wood");
-            return SavePrefab(t,"Pilgrim");
-        }
-        static GameObject Monk()
-        {
-            var t=Character("Hooded monk");
-            Part("Brown robe",t,"robe",V(0,.1f,0),V(1,1.15f,1),"Leather");
-            Sphere("Hood",t,V(0,1.44f,0),V(.66f,.65f,.6f),"WoodDark");
-            Sphere("Face opening",t,V(0,1.43f,-.23f),V(.46f,.44f,.2f),"Skin"); Eyes(t,1.47f,-.33f,.08f);
-            Sphere("Simple beard",t,V(0,1.3f,-.32f),V(.31f,.26f,.12f),"WoodDark");
-            Part("Rope belt",t,"torus",V(0,.68f,0),V(.34f,.35f,.34f),"WoodLight");
-            Stroke(t,.022f,V(.1f,.65f,-.37f),V(.16f,.27f,-.37f));
-            Rod("Arm",t,V(-.24f,1.06f,0),V(-.5f,.93f,-.06f),.11f,"Leather");
-            Rod("Arm",t,V(.24f,1.06f,0),V(.5f,.93f,-.06f),.11f,"Leather");
-            Sphere("Left hand",t,V(-.54f,.92f,-.06f),V(.16f,.16f,.16f),"Skin");
-            Sphere("Right hand",t,V(.54f,.92f,-.06f),V(.16f,.16f,.16f),"Skin");
-            return SavePrefab(t,"Monk");
-        }
-        static GameObject Goblin(string name,int kind)
-        {
-            var t=Character(name);
-            Rod("Left stick leg",t,V(-.16f,.12f,0),V(-.05f,.59f,0),.035f,"WoodDark",false);
-            Rod("Right stick leg",t,V(.19f,.19f,-.06f),V(.12f,.59f,0),.035f,"WoodDark",false);
-            Part("Little brown tunic",t,"robe",V(0,.37f,0),V(.62f,.65f,.6f),"Leather");
-            Sphere("Simple green head",t,V(0,1.27f,-.03f),V(.68f,.58f,.53f),"Goblin");
-            var ear=Part("Pointed right ear",t,"ear",V(.31f,1.36f,-.02f),Vector3.one,"Goblin");
-            var ear2=Part("Pointed left ear",t,"ear",V(-.31f,1.36f,-.02f),Vector3.one,"Goblin"); ear2.transform.localRotation=Quaternion.Euler(0,180,0);
-            Sphere("Long snout",t,V(-.05f,1.19f,-.31f),V(.29f,.24f,.48f),"Goblin");
-            Eyes(t,1.34f,-.276f,.13f);
-            Stroke(t,.017f,V(-.16f,1.1f,-.45f),V(.04f,1.08f,-.46f));
-            Rod("Left skinny arm",t,V(-.19f,.94f,0),V(-.48f,.77f,-.07f),.038f,"GoblinDark",false);
-            Rod("Right skinny arm",t,V(.19f,.94f,0),V(.46f,.88f,-.07f),.038f,"GoblinDark",false);
-            Part("Belt",t,"torus",V(0,.63f,0),V(.23f,.22f,.23f),"WoodDark");
-            if(kind==2)
-            {
-                Rod("Bow forearm",t,V(.42f,.88f,-.07f),V(.58f,1,-.1f),.038f,"GoblinDark",false);
-                Sphere("Bow hand",t,V(.6f,1,-.1f),V(.12f,.12f,.12f),"Goblin");
-                Arc(t,V(.25f,1,-.1f),.35f,-80,80,.028f,"Wood");
-                Stroke(t,.013f,V(.31f,1.345f,-.1f),V(.31f,.655f,-.1f));
-                Rod("Arrow",t,V(.35f,1.02f,-.13f),V(1.1f,1.02f,-.13f),.016f,"WoodDark",false);
-            }
-            else
-            {
-                Sphere("Sword hand",t,V(-.5f,.76f,-.1f),V(.12f,.12f,.12f),"Goblin");
-                Rod("Sword grip",t,V(-.52f,.72f,-.1f),V(-.68f,.9f,-.1f),.035f,"Wood");
-                Vector3 bladeStart=V(-.68f,.9f,-.1f), bladeEnd=V(-1.12f,1.35f,-.1f);
-                var sword=Box("Tiny sword",t,(bladeStart+bladeEnd)*.5f,V(.13f,(bladeEnd-bladeStart).magnitude,.05f),"Cream");
-                sword.transform.localRotation=Quaternion.FromToRotation(Vector3.up,bladeEnd-bladeStart);
-                Rod("Sword guard",t,V(-.78f,.8f,-.1f),V(-.58f,1,-.1f),.025f,"WoodDark");
-                if(kind==1)
-                {
-                    Part("Rose round buckler",t,"cylinder",V(.42f,.79f,-.28f),V(.52f,.10f,.52f),"Rose").transform.localRotation=Quaternion.Euler(90,0,0);
-                    Sphere("Shield boss",t,V(.42f,.79f,-.36f),V(.16f,.16f,.1f),"Gold");
-                }
-                else
-                {
-                    Part("Small round shield",t,"cylinder",V(.36f,.65f,-.23f),V(.42f,.09f,.42f),"Rose").transform.localRotation=Quaternion.Euler(90,0,0);
-                }
-            }
-            return SavePrefab(t,name.Replace(" ",""));
-        }
+        // Character meshes and poses are authored in InkwoodCharacters.cs.
 
         static void Rock(Transform parent,float x,float z,float size)
         {
@@ -654,8 +426,9 @@ namespace Inkwood.Editor
             var t=Group("Three-leaf sprout",parent); t.localPosition=V(x,.03f,z); t.localScale=Vector3.one*size;
             for(int i=0;i<3;i++)
             {
-                var leaf=Part("Leaf",t,"leaf",V(0,.01f,0),Vector3.one,"Moss");
+                var leaf=Part("Leaf",t,"leaf",V(0,.01f,0),V(1,1,.18f),"Moss");
                 leaf.transform.localRotation=Quaternion.Euler(-16,i*115,-30+i*30);
+                Stroke(leaf.transform,.009f,V(0,.13f,-.10f),V(0,.4f,-.16f));
             }
         }
         static void Mushrooms(Transform parent,float x,float z,int count)
@@ -663,7 +436,8 @@ namespace Inkwood.Editor
             var t=Group("Coral mushroom cluster",parent); t.localPosition=V(x,0,z);
             for(int i=0;i<count;i++)
             {
-                float xx=Rand(-.8f,.8f), zz=Rand(-.55f,.55f), h=Rand(.22f,.65f), r=Rand(.16f,.32f);
+                float a=i*2.39996f,spread=.92f*Mathf.Sqrt((i+.5f)/count);
+                float xx=Mathf.Cos(a)*spread, zz=Mathf.Sin(a)*spread*.8f, h=Rand(.22f,.62f), r=Rand(.14f,.23f);
                 Rod("Cream stem",t,V(xx,.03f,zz),V(xx,h,zz),.055f,"Cream");
                 Sphere("Rounded mushroom cap",t,V(xx,h,zz),V(r*2,r*1.05f,r*2),i%3==0?"Orange":"Rose");
                 for(int j=0;j<3;j++) Sphere("Cream cap dot",t,V(xx+Rand(-r*.5f,r*.5f),h+r*.48f,zz+Rand(-r*.35f,r*.35f)),V(.06f,.028f,.06f),"Cream",false);
@@ -853,8 +627,8 @@ namespace Inkwood.Editor
         }
         static Vector3 CanopyPoint(float phi,float theta,int seed)
         {
-            float bump=1+Mathf.Sin(phi)*(.048f*Mathf.Sin(theta*9+seed+phi*3)+.033f*Mathf.Cos(phi*18+theta*2+seed));
-            float taper=1-.17f*Mathf.Cos(phi);
+            float bump=1+Mathf.Sin(phi)*((seed==1?.08f:.055f)*Mathf.Sin(theta*(seed==1?6:9)+seed+phi*3)+.045f*Mathf.Cos(phi*(seed==2?20:16)+theta*2+seed));
+            float taper=seed==0?1-.32f*Mathf.Cos(phi):seed==1?1+.1f*Mathf.Sin(phi):seed==3?.8f-.12f*Mathf.Cos(phi):1;
             return V(Mathf.Sin(phi)*Mathf.Cos(theta)*bump*taper,Mathf.Cos(phi)*bump,Mathf.Sin(phi)*Mathf.Sin(theta)*bump);
         }
         static Mesh Torus(float radius,float tube)
@@ -872,15 +646,15 @@ namespace Inkwood.Editor
             }
             var mesh=new Mesh(); mesh.SetVertices(v); mesh.SetTriangles(tri,0); mesh.SetNormals(normals); mesh.RecalculateBounds(); return mesh;
         }
-        static Mesh Tube(Vector3[] path,float radius,int sides)
+        static Mesh Tube(Vector3[] path,float radius,int sides,float tipRadius=-1)
         {
             var v=new List<Vector3>(); var tri=new List<int>(); var normals=new List<Vector3>();
             // Round ends keep isolated marks from looking like cut pipe.
             var centers=new List<Vector3>(); var radii=new List<float>();
             Vector3 first=(path[1]-path[0]).normalized, last=(path[path.Length-1]-path[path.Length-2]).normalized;
             centers.Add(path[0]-first*radius); radii.Add(.001f);
-            centers.AddRange(path); for(int i=0;i<path.Length;i++) radii.Add(radius);
-            centers.Add(path[path.Length-1]+last*radius); radii.Add(.001f);
+            centers.AddRange(path); for(int i=0;i<path.Length;i++) radii.Add(tipRadius<0?radius:Mathf.Lerp(radius,tipRadius,i/(float)(path.Length-1)));
+            centers.Add(path[path.Length-1]+last*(tipRadius<0?radius:tipRadius)); radii.Add(.001f);
             for(int j=0;j<centers.Count;j++)
             {
                 var tangent=(centers[Mathf.Min(j+1,centers.Count-1)]-centers[Mathf.Max(0,j-1)]).normalized;
@@ -950,12 +724,15 @@ namespace Inkwood.Editor
         {
             var names=new Dictionary<string,string>
             {
-                {"Scalloped woodland tree","WoodlandTree"},{"Simple tiered pine","PineTree"},
+                {"Tall scalloped tree","WoodlandTree"},{"Tall sweeping pine","PineTree"},
+                {"Broad old oak","BroadOak"},{"Round teal tree","RoundTealTree"},{"Orange cloud tree","OrangeTree"},{"Small layered cedar","CedarTree"},
                 {"Bare twisting oak","BareOak"},{"Broken mossy wall","MossyWall"},
                 {"Ancient standing stones","StandingStones"},{"Quiet circular fountain","Fountain"},
                 {"Mossy stone sarcophagus","Sarcophagus"},{"Coral mushroom cluster","Mushrooms"},
                 {"Banded wooden barrel","Barrel"},{"Open treasure chest","TreasureChest"},
-                {"Little ivory skull","Skull"},{"Standing ruin & ivy","BrokenTower"}
+                {"Little ivory skull","Skull"},{"Ivy covered broken arch","BrokenTower"},
+                {"Scalloped undergrowth","Undergrowth"},{"Planked supply crate","SupplyCrate"},{"Little blue field mouse","FieldMouse"},
+                {"Skull marker on crooked stake","SkullMarker"},{"Scattered ivory bones","Bones"}
             };
             var all=scene.GetRootGameObjects().SelectMany(g=>g.GetComponentsInChildren<Transform>()).ToArray();
             foreach(var pair in names)
@@ -964,7 +741,7 @@ namespace Inkwood.Editor
                 if(!source) continue;
                 var copy=UnityEngine.Object.Instantiate(source.gameObject);
                 copy.transform.SetParent(null); copy.transform.SetPositionAndRotation(Vector3.zero,Quaternion.identity);
-                copy.transform.localScale=Vector3.one;
+                copy.transform.localScale=source.localScale/Mathf.Max(source.localScale.z,.001f);
                 PrefabUtility.SaveAsPrefabAsset(copy,Root+"/Prefabs/"+pair.Value+".prefab");
                 UnityEngine.Object.DestroyImmediate(copy);
             }
