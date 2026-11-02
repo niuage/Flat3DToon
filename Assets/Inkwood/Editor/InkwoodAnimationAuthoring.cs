@@ -119,6 +119,15 @@ namespace Inkwood.Editor
                 AnimationUtility.SetKeyRightTangentMode(curve, i, AnimationUtility.TangentMode.ClampedAuto);
             }
             AnimationUtility.SetEditorCurve(clip, EditorCurveBinding.FloatCurve(AnimationUtility.CalculateTransformPath(target, root.transform), typeof(Transform), property), curve);
+            // Unity groups transform curves into vectors. Bind the other axes too,
+            // otherwise partial scale curves can reset tiny eyes to unit width/depth.
+            if (property == "m_LocalPosition.y" || property == "m_LocalScale.y")
+            {
+                string prefix = property.Substring(0, property.Length - 1);
+                Vector3 rest = property == "m_LocalPosition.y" ? target.localPosition : target.localScale;
+                AnimationUtility.SetEditorCurve(clip, EditorCurveBinding.FloatCurve(AnimationUtility.CalculateTransformPath(target, root.transform), typeof(Transform), prefix + "x"), AnimationCurve.Constant(0, length, rest.x));
+                AnimationUtility.SetEditorCurve(clip, EditorCurveBinding.FloatCurve(AnimationUtility.CalculateTransformPath(target, root.transform), typeof(Transform), prefix + "z"), AnimationCurve.Constant(0, length, rest.z));
+            }
         }
         static void Angle(AnimationClip clip, GameObject root, Transform bone, float length, float x, float y, float z)
         {
@@ -171,6 +180,8 @@ namespace Inkwood.Editor
                     float y = eye.localScale.y;
                     var curve = new AnimationCurve(new Keyframe(0, y), new Keyframe(2.35f, y), new Keyframe(2.42f, y * .1f), new Keyframe(2.49f, y * .1f), new Keyframe(2.57f, y), new Keyframe(4, y));
                     AnimationUtility.SetEditorCurve(blink, EditorCurveBinding.FloatCurve(AnimationUtility.CalculateTransformPath(eye, root.transform), typeof(Transform), "m_LocalScale.y"), curve);
+                    Curve(blink, root, eye, "m_LocalScale.x", 4, eye.localScale.x, eye.localScale.x);
+                    Curve(blink, root, eye, "m_LocalScale.z", 4, eye.localScale.z, eye.localScale.z);
                 }
                 var blinkMachine = new AnimatorStateMachine { name = "Blink" }; AssetDatabase.AddObjectToAsset(blinkMachine, controller);
                 var blinkState = blinkMachine.AddState("Blink"); blinkState.motion = blink; blinkState.writeDefaultValues = false; blinkMachine.defaultState = blinkState;
