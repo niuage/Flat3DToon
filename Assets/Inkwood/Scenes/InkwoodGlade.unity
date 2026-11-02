@@ -59290,6 +59290,54 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 622941460}
   m_Mesh: {fileID: 4300000, guid: d0128d962be259149a6c5f9c791fb143, type: 2}
+--- !u!1 &623981909
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 623981911}
+  - component: {fileID: 623981910}
+  m_Layer: 0
+  m_Name: "09 \xB7 Character motion"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &623981910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 623981909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a72dd5427e659624ab994fc593718280, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Inkwood.DioramaAnimation
+  mode: 0
+  speed: 1
+  paused: 0
+  showControls: 1
+--- !u!4 &623981911
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 623981909}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &624632207
 GameObject:
   m_ObjectHideFlags: 0
@@ -208879,3 +208927,4 @@ SceneRoots:
   - {fileID: 760158726}
   - {fileID: 310392792}
   - {fileID: 1748704843}
+  - {fileID: 623981911}

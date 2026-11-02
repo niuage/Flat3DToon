@@ -85,6 +85,7 @@ namespace Inkwood.Editor
             ExportEnvironmentPrefabs(scene);
             UnityEngine.Object.DestroyImmediate(library.gameObject);
             SetupLighting(scene);
+            InkwoodAnimationAuthoring.EnsureDirector(scene);
             EditorSceneManager.SaveScene(scene,ScenePath);
             AssetDatabase.SaveAssets();
             var sceneView=SceneView.lastActiveSceneView;
@@ -288,6 +289,7 @@ namespace Inkwood.Editor
         }
         static GameObject SavePrefab(Transform t,string name)
         {
+            InkwoodAnimationAuthoring.RigCharacter(t.gameObject,name);
             var prefab=PrefabUtility.SaveAsPrefabAsset(t.gameObject,Root+"/Prefabs/"+name+".prefab");
             UnityEngine.Object.DestroyImmediate(t.gameObject);
             return prefab;

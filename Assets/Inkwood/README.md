@@ -37,6 +37,14 @@ Change **Outline width at 1080p** and **Ink color** on `Materials/Outline.mat`. 
 
 Foliage arches, masonry marks, cracks, clothing folds, and facial details are intentionally placed mesh tubes, with spaces between strokes. These are actual 3D details attached to the relevant model, not textures or automatic edge detection. Canopy marks are sampled from the canopy surface, with marks on both sides. Their visibility changes naturally with occlusion during camera rotation. Geometry intersections and creases are not automatically inked, so the scene keeps a selective illustration-like finish.
 
+## Character animation
+
+All ten character prefabs include editable Unity Idle and Walk clips and an Animator controller in `Animations/`. Idles add breathing, small head turns, arm and equipment sway, and blinking on characters with eyes. Walks are intentionally in place so the reference layout stays intact. Rigid body-part pivots preserve the simple shapes and carry their outlines and interior strokes with them. These are stylized rigid rigs, rather than deforming humanoid rigs.
+
+In Play Mode, use the top-left controls or **1** for Idle, **2** for Walk, and **Space** to pause/resume. The **09 · Character motion** object controls the whole scene; individual Character Motion components expose speed and mode through their public methods. Rebuilding the scene retains existing animation clips, allowing hand edits in Unity's Animation window.
+
+Validation checked all animation bindings and looping settings, unchanged rest poses, and all fourteen scene actors entering Idle and Walk. Live Play Mode checks confirmed moving leg poses, stationary scene anchors, and pause/resume at half speed.
+
 ## Rendering
 
 `Settings/InkwoodPipeline.asset` is assigned to the active PC quality level. Its dedicated forward renderer uses 4x MSAA; the camera also uses SMAA. The original PC pipeline and renderer assets remain available in `Assets/Settings/`. The scene does not require Linework or Blender imports.
