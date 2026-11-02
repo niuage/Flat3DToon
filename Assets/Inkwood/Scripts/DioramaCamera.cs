@@ -17,6 +17,7 @@ namespace Inkwood
         public float rotationSpeed = 0.22f;
         public Vector2 zoomLimits = new Vector2(5, 18);
         public bool showHelp = true;
+        public bool showCameraControls = true;
         float yaw;
         float zoomSize;
         Camera view;
@@ -67,7 +68,7 @@ namespace Inkwood
         }
         void OnGUI()
         {
-            if (!Application.isPlaying || !showHelp) return;
+            if (!Application.isPlaying || !showHelp || !showCameraControls) return;
             if(!lighting) lighting=Object.FindAnyObjectByType<DioramaLighting>();
             string shadowState=lighting&&lighting.CastShadows?"ON":"OFF";
             var style = new GUIStyle(GUI.skin.label) { alignment = TextAnchor.MiddleCenter, fontSize = 13 };

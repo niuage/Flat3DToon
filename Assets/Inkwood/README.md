@@ -45,6 +45,10 @@ In Play Mode, use the top-left controls or **1** for Idle, **2** for Walk, and *
 
 Validation checked all animation bindings and looping settings, unchanged rest poses, and all fourteen scene actors entering Idle and Walk. Live Play Mode checks confirmed moving leg poses, stationary scene anchors, and pause/resume at half speed.
 
+Open `Scenes/AnimationStudio.unity` and press Play for the close-up viewer. **P/N** selects the previous/next character; **1/2** selects Idle/Walk; **Space** pauses. The panel also has a speed slider and a cast-shadow switch. Camera rotation, zoom, **R** reset, **S** shadows, and **H** hide controls work here too. Selection retains the current motion, speed, pause state, and lighting mode. **Inkwood > Build Animation Studio** recreates this separate preview scene after open scenes are saved. Keyboard checks verified Next, Walk, and Pause; selection wrapping, speed retention, and both shadow modes were also checked live.
+
+`Previews/Character-Walk.gif` compares one synchronized, slowed walk cycle from the actual clips. The Studio uses each character's authored playback timing.
+
 ## Rendering
 
 `Settings/InkwoodPipeline.asset` is assigned to the active PC quality level. Its dedicated forward renderer uses 4x MSAA; the camera also uses SMAA. The original PC pipeline and renderer assets remain available in `Assets/Settings/`. The scene does not require Linework or Blender imports.
